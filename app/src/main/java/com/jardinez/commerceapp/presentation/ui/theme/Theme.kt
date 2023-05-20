@@ -1,4 +1,4 @@
-package com.jardinez.commerceapp.ui.theme
+package com.jardinez.commerceapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

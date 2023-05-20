@@ -1,4 +1,4 @@
-package com.jardinez.commerceapp.ui.theme
+package com.jardinez.commerceapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
