@@ -7,6 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomSpacer(size: Int) {
+fun DefaultSpacer(size: Int) {
   Spacer(modifier = Modifier.size(size.dp))
 }
