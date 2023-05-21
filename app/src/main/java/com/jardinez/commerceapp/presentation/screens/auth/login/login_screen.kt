@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.jardinez.commerceapp.presentation.screens.auth.login.components.Login
 import com.jardinez.commerceapp.presentation.screens.auth.login.components.LoginContent
 
 @Composable
@@ -17,6 +18,7 @@ fun LoginScreen(navController: NavHostController) {
       LoginContent(navController)
     }
   }
+  Login(navController)
 }
 
 @Preview(showSystemUi = true)

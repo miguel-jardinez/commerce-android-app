@@ -9,6 +9,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.jardinez.commerceapp.presentation.navigation.screen.auth.AuthScreen
+import com.jardinez.commerceapp.presentation.screens.auth.components.AuthHeader
 
 @Composable
 fun LoginContent(navController: NavHostController) {
@@ -16,7 +18,14 @@ fun LoginContent(navController: NavHostController) {
     modifier = Modifier.padding(horizontal = 16.dp)
   ) {
     Column {
-      LoginHeader()
+      AuthHeader(
+        navController = navController,
+        title = "Login in",
+        subtitle = "Glad to see you here again!",
+        description = "If you don’t have an account register",
+        actionLabel = "Register here !",
+        route = AuthScreen.Register
+      )
       LoginForm()
     }
   }

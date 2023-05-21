@@ -15,10 +15,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jardinez.commerceapp.presentation.components.CustomSpacer
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.jardinez.commerceapp.presentation.components.DefaultSpacer
+import com.jardinez.commerceapp.presentation.navigation.screen.auth.AuthScreen
 
 @Composable
-fun LoginHeader() {
+fun LoginHeader(navController: NavHostController) {
   Box(modifier = Modifier.padding(top = 70.dp)) {
     Column {
       Text(
@@ -26,7 +29,7 @@ fun LoginHeader() {
         fontSize = 26.sp,
         fontWeight = FontWeight.SemiBold
       )
-      CustomSpacer(size = 8)
+      DefaultSpacer(size = 8)
       Text(
         text = "Glad to see you here again!",
         fontSize = 21.sp,
@@ -34,12 +37,14 @@ fun LoginHeader() {
       Spacer(modifier = Modifier.size(26.dp))
       Column {
         Text(text = "If you don’t have an account register")
-        CustomSpacer(size = 8)
+        DefaultSpacer(size = 8)
         Row {
           Text(text = "You can")
-          CustomSpacer(size = 8)
+          DefaultSpacer(size = 8)
           Text(
-            modifier = Modifier.clickable {  },
+            modifier = Modifier.clickable { 
+              navController.navigate(AuthScreen.Register.route)
+            },
             color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.SemiBold,
             text = "Register here !"
@@ -54,6 +59,6 @@ fun LoginHeader() {
 @Composable
 fun LoginHeaderPreview() {
   Box {
-    LoginHeader()
+    LoginHeader(navController = rememberNavController())
   } 
 }
