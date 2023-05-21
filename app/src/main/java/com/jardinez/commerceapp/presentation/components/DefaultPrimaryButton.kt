@@ -44,7 +44,7 @@ fun DefaultPrimaryButton(
           strokeWidth = 2.dp,
           color = Color.White
         )
-        CustomSpacer(size = 14)
+        DefaultSpacer(size = 14)
       }
       Text(text = text, fontSize = 18.sp)
     }
