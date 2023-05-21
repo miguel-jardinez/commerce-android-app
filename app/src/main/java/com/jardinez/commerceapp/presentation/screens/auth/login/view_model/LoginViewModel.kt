@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
-import com.jardinez.commerceapp.domain.models.auth.LoginFormData
+import com.jardinez.commerceapp.domain.models.auth.LoginFormRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -98,7 +98,7 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     return true
   }
 
-  private suspend fun onSubmit(loginForm: LoginFormData) {
+  private suspend fun onSubmit(loginForm: LoginFormRequest) {
     val email = isEmailValid(loginForm.email)
     val password = isPasswordValid(loginForm.password)
 

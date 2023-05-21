@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.jardinez.commerceapp.domain.models.auth.LoginFormData
+import com.jardinez.commerceapp.domain.models.auth.LoginFormRequest
 import com.jardinez.commerceapp.domain.models.utils.InputsName
 import com.jardinez.commerceapp.presentation.components.DefaultOutlinedEditTextInput
 import com.jardinez.commerceapp.presentation.components.DefaultPrimaryButton
@@ -63,7 +63,7 @@ fun LoginForm(viewModel: LoginViewModel = hiltViewModel()) {
     DefaultPrimaryButton(text = "Login", loading = loginState.value.loading) {
       viewModel.onEvent(
           LoginEvents.OnSendForm(
-            LoginFormData(
+            LoginFormRequest(
               email = emailVm.value.value,
               password = passwordVm.value.value
             )
