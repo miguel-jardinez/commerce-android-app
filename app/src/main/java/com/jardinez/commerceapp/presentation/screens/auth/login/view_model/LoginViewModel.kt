@@ -87,7 +87,7 @@ class LoginViewModel @Inject constructor(
       InputsName.Password -> {
         _passwordState.value = _passwordState.value.copy(isError = state, errorMessage = errorMessage)
       }
-      else -> {}
+      else -> Unit
     }
   }
 

@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.jardinez.commerceapp.presentation.navigation.Graph
+import com.jardinez.commerceapp.presentation.navigation.screen.home.HomeScreen
 import com.jardinez.commerceapp.presentation.screens.auth.login.events.UIEvents
 import com.jardinez.commerceapp.presentation.screens.auth.login.view_model.LoginViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -18,7 +19,7 @@ fun Login(
     viewModel.uiEvents.collectLatest { event ->
       when(event) {
         UIEvents.NavigateToLogin -> {
-          navController.navigate(route = Graph.HOME) {
+          navController.navigate(route = HomeScreen.Home.route) {
             popUpTo(Graph.AUTH) { inclusive = true }
           }
         }

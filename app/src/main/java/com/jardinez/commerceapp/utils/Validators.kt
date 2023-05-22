@@ -7,6 +7,16 @@ import javax.inject.Inject
 
 class Validators @Inject constructor() {
 
+  fun isValidLength(value: String, length:Int): ErrorInput {
+    val dataLength = value.length
+
+    if (dataLength < length) {
+      return ErrorInput("Value must be more than $length", true)
+    }
+
+    return ErrorInput("", false)
+  }
+
   fun isEmailValid(email: String): ErrorInput {
     val isNotEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
     val isEmpty = TextUtils.isEmpty(email)
@@ -24,14 +34,19 @@ class Validators @Inject constructor() {
 
   fun isPasswordValid(password: String): ErrorInput {
     val isEmpty = TextUtils.isEmpty(password)
-    val correctLength = password.length > 6
 
     if (isEmpty) {
       return ErrorInput("Password should not to be empty", true)
     }
 
-    if(!correctLength) {
-      return ErrorInput("Password should be more than 6 characters", true)
+    isValidLength(password, 6)
+
+    return ErrorInput("", false)
+  }
+
+  fun comparePassword(password: String, repeatedPassword: String): ErrorInput {
+    if (password != repeatedPassword) {
+      return ErrorInput("Password does not match", true)
     }
 
     return ErrorInput("", false)
