@@ -4,4 +4,6 @@ sealed class InputsName {
   object Email: InputsName()
   object Password: InputsName()
   object RepeatPassword: InputsName()
+  object UserName: InputsName()
+  object ContactNumber: InputsName()
 }

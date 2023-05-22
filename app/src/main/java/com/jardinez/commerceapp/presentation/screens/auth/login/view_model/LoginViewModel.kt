@@ -1,6 +1,5 @@
 package com.jardinez.commerceapp.presentation.screens.auth.login.view_model
 
-import android.text.TextUtils
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -10,14 +9,19 @@ import com.jardinez.commerceapp.presentation.screens.auth.login.events.LoginEven
 import com.jardinez.commerceapp.presentation.utils.InputState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import android.util.Patterns
 import androidx.lifecycle.viewModelScope
 import com.jardinez.commerceapp.domain.models.auth.LoginFormRequest
+import com.jardinez.commerceapp.presentation.screens.auth.login.events.UIEvents
+import com.jardinez.commerceapp.utils.Validators
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(
+  private val validators: Validators
+) : ViewModel() {
   private val _emailState = mutableStateOf(InputState( placeholder = "Email" ))
   var emailState: State<InputState> = _emailState
 
@@ -26,6 +30,9 @@ class LoginViewModel @Inject constructor() : ViewModel() {
 
   private val _loginState = mutableStateOf(LoginState())
   var loginState: State<LoginState> = _loginState
+
+  private val _uiEvent = Channel<UIEvents>()
+  val uiEvents = _uiEvent.receiveAsFlow()
 
   fun onEvent(event: LoginEvents) {
     when(event) {
@@ -56,56 +63,18 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     }
   }
 
-  private fun isEmailValid(email: String): Boolean {
-    val isNotEmail = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    val isEmpty = TextUtils.isEmpty(email)
-    showErrorMessage(InputsName.Email, false, "")
-
-    Log.d("VALIDATION", "isEmailValid: isEmpy: $isEmpty isNotEmail: $isNotEmail")
-
-    if (isEmpty) {
-      showErrorMessage(InputsName.Email, true, "Email input should not empty")
-      return false
-    }
-
-    if (!isNotEmail) {
-      showErrorMessage(InputsName.Email, true, "Email is not an email")
-      return false
-    }
-
-    showErrorMessage(InputsName.Email, false, "")
-    return true
-  }
-
-  private fun isPasswordValid(password: String): Boolean {
-    val isEmpty = TextUtils.isEmpty(password)
-    val correctLength = password.length > 6
-    showErrorMessage(InputsName.Password, false, "")
-
-    Log.d("VALIDATION", "isPasswordValid: isEmpy: $isEmpty correctLength: $correctLength ${password.length}")
-
-    if (isEmpty) {
-      showErrorMessage(InputsName.Password, true, "Password no should be empty")
-      return false
-    }
-
-    if(!correctLength) {
-      showErrorMessage(InputsName.Password, true, "Password must be more than 6 characters")
-      return false
-    }
-
-    showErrorMessage(InputsName.Password, false, "")
-    return true
-  }
-
   private suspend fun onSubmit(loginForm: LoginFormRequest) {
-    val email = isEmailValid(loginForm.email)
-    val password = isPasswordValid(loginForm.password)
+    val email = validators.isEmailValid(loginForm.email)
+    val password = validators.isPasswordValid(loginForm.password)
 
-    if (email && password) {
+    showErrorMessage(InputsName.Email, email.isError, email.message)
+    showErrorMessage(InputsName.Password, password.isError, password.message)
+
+    if (!email.isError && !password.isError) {
       _loginState.value = _loginState.value.copy(loading = true)
-      delay(3000)
+      delay(1000)
       _loginState.value = _loginState.value.copy(loading = false)
+      _uiEvent.send(UIEvents.NavigateToLogin)
       Log.d("LoginViewModel", "onSubmit: $loginForm")
     }
   }
@@ -118,7 +87,7 @@ class LoginViewModel @Inject constructor() : ViewModel() {
       InputsName.Password -> {
         _passwordState.value = _passwordState.value.copy(isError = state, errorMessage = errorMessage)
       }
-      else -> {}
+      else -> Unit
     }
   }
 
