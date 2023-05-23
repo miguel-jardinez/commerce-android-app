@@ -4,4 +4,65 @@ plugins {
     id 'com.android.library' version '8.0.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
     id 'com.google.dagger.hilt.android' version '2.44' apply false
+
+    // Jacoco
+    id 'jacoco'
+}
+
+
+subprojects {
+    apply plugin: 'jacoco'
+
+    afterEvaluate {
+        android {
+            testOptions {
+                buildTypes {
+                    // Jacoco config: It configures/enables createDebugCoverageReport task to be used in codeCoverage task below
+                    debug.testCoverageEnabled = true
+                }
+            }
+
+            // Jacoco options: https://docs.gradle.org/current/userguide/jacoco_plugin.html#default_values_of_the_jacoco_task_extension
+            tasks.register('codeCoverage', JacocoReport) {
+                dependsOn 'testDebugUnitTest', 'createDebugCoverageReport' // run unit tests and ui tests to generate code coverage report
+                reports {
+                    html.required.set(true)
+                    html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+                    xml.required.set(true) // It's required for Sonar
+                    xml.outputLocation.set(file("${project.buildDir}/reports/jacoco/jacoco.xml"))
+                }
+                def mainSrc = "${project.projectDir}/src/main/java"
+                def kotlinTree = fileTree(
+                        dir: "$project.buildDir/tmp/kotlin-classes/debug",
+                        excludes: [
+                                '**/BuildConfig.*',
+                                '**/*$*',
+                                '**/Hilt_*.class',
+                                'hilt_**',
+                                'dagger/hilt/**',
+                                '**/*JsonAdapter.*'
+                        ]
+                )
+                sourceDirectories.from = file(mainSrc)
+                classDirectories.from = files(kotlinTree)
+                executionData.from = fileTree(dir: project.buildDir, includes: [
+                        '**/*.exec', // unit tests
+                        '**/*.ec' // ui tests
+                ])
+            }
+        }
+    }
+
+    // Jacoco version: https://docs.gradle.org/current/userguide/jacoco_plugin.html#sec:configuring_the_jacoco_plugin
+    jacoco {
+        toolVersion = "0.8.10"
+    }
+
+    // Jacoco test options: https://docs.gradle.org/current/userguide/jacoco_plugin.html#default_values_of_the_jacoco_task_extension
+    tasks.withType(Test) {
+        jacoco {
+            includeNoLocationClasses = true // Robolectric support
+            excludes = ['jdk.internal.*'] // Java compatibility
+        }
+    }
 }
