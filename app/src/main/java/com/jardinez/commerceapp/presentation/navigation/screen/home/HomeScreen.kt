@@ -15,5 +15,5 @@ sealed class HomeScreen(
   object Home : HomeScreen("/home/products", "Home", Icons.Default.Home)
   object Profile : HomeScreen("/home/profile", "Profile", Icons.Default.Person)
   object Cart : HomeScreen("/home/cart", "Cart", Icons.Default.ShoppingCart)
-  object Settings : HomeScreen("/home/settings", "Settings", Icons.Default.Settings)
+  object Settings : HomeScreen("/home/settings", "Config", Icons.Default.Settings)
 }
