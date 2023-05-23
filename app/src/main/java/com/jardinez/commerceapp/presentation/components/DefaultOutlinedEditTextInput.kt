@@ -63,7 +63,7 @@ fun DefaultOutlinedEditTextInput(
       value = value,
       colors = TextFieldDefaults.outlinedTextFieldColors(
         backgroundColor = Color(0XFFF0EFFF),
-        placeholderColor = MaterialTheme.colors.primary,
+        placeholderColor = MaterialTheme.colors.primary.copy(alpha = 0.5f),
         unfocusedBorderColor = Color.Transparent,
         focusedBorderColor = Color.Transparent,
         textColor = MaterialTheme.colors.primary,
@@ -85,7 +85,7 @@ fun DefaultOutlinedEditTextInput(
 fun EditTextInputAuthPreview() {
   Box {
     DefaultOutlinedEditTextInput(
-      value = "Hola Mundo",
+      value = "",
       hint = "Email",
       isError = true,
       isPassword = false,

@@ -13,7 +13,7 @@ sealed class HomeScreen(
   val icon: ImageVector
 ) {
   object Home : HomeScreen("/home/products", "Home", Icons.Default.Home)
-  object Profile : HomeScreen("/home/profile", "Home", Icons.Default.Person)
-  object Cart : HomeScreen("/home/cart", "Home", Icons.Default.ShoppingCart)
-  object Settings : HomeScreen("/home/settings", "Home", Icons.Default.Settings)
+  object Profile : HomeScreen("/home/profile", "Profile", Icons.Default.Person)
+  object Cart : HomeScreen("/home/cart", "Cart", Icons.Default.ShoppingCart)
+  object Settings : HomeScreen("/home/settings", "Settings", Icons.Default.Settings)
 }

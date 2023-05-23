@@ -1,6 +1,5 @@
 package com.jardinez.commerceapp.presentation.screens.auth.login.view_model
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -75,7 +74,6 @@ class LoginViewModel @Inject constructor(
       delay(1000)
       _loginState.value = _loginState.value.copy(loading = false)
       _uiEvent.send(UIEvents.NavigateToLogin)
-      Log.d("LoginViewModel", "onSubmit: $loginForm")
     }
   }
 

@@ -11,7 +11,8 @@ import com.jardinez.commerceapp.presentation.screens.auth.register.components.Re
 @Composable
 fun RegisterScreen(navController: NavHostController) {
   Scaffold { paddingValues ->
-    Box(modifier = Modifier.padding(paddingValues)) {
+    Box(modifier = Modifier
+      .padding(paddingValues)) {
       RegisterContent(navController)
     }
   }
