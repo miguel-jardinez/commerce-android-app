@@ -78,7 +78,7 @@ class RegisterViewModel @Inject constructor(
     val isValidForm = iseValidForm(registerRequest)
 
     if (isValidForm) {
-      delay(1500)
+      delay(timeMillis =1500)
       Log.d("registerRequest", "onSubmit: $registerRequest")
     }
   }
@@ -106,8 +106,8 @@ class RegisterViewModel @Inject constructor(
 
   private fun iseValidForm(registerRequest: RegisterFormRequest): Boolean {
     val isEmailValid = validators.isEmailValid(registerRequest.email)
-    val isUsernameValid = validators.isValidLength(registerRequest.username, 6)
-    val isPhoneNumberValid = validators.isValidLength(registerRequest.phoneNumber, 10)
+    val isUsernameValid = validators.isValidLength(registerRequest.username, length = 6)
+    val isPhoneNumberValid = validators.isValidLength(registerRequest.phoneNumber, length = 10)
     val isPasswordValid = validators.isPasswordValid(registerRequest.password)
     val isConfirmPasswordValid = validators.comparePassword(registerRequest.password, registerRequest.repeatPassword)
 

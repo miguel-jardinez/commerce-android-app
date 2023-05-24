@@ -71,7 +71,7 @@ class LoginViewModel @Inject constructor(
 
     if (!email.isError && !password.isError) {
       _loginState.value = _loginState.value.copy(loading = true)
-      delay(1000)
+      delay(timeMillis = 1000)
       _loginState.value = _loginState.value.copy(loading = false)
       _uiEvent.send(UIEvents.NavigateToLogin)
     }

@@ -39,7 +39,7 @@ class Validators @Inject constructor() {
       return ErrorInput("Password should not to be empty", true)
     }
 
-    isValidLength(password, 6)
+    isValidLength(password, length = 6)
 
     return ErrorInput("", false)
   }

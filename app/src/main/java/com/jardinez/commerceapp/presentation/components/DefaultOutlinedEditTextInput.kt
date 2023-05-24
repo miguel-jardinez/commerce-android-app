@@ -62,7 +62,7 @@ fun DefaultOutlinedEditTextInput(
       },
       value = value,
       colors = TextFieldDefaults.outlinedTextFieldColors(
-        backgroundColor = Color(0XFFF0EFFF),
+        backgroundColor = Color(color = 0XFFF0EFFF),
         placeholderColor = MaterialTheme.colors.primary.copy(alpha = 0.5f),
         unfocusedBorderColor = Color.Transparent,
         focusedBorderColor = Color.Transparent,
